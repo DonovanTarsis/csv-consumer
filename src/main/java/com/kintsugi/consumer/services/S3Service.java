@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Paths;
+import java.util.Date;
 
 import com.kintsugi.consumer.utils.ClientS3;
 
@@ -55,18 +56,21 @@ public class S3Service {
 
             byte[] data = objBytes.asByteArray();
 
-            File myfile = new File(objKey);
+            File myfile = new File(objKey.replace(".", "-" + new Date().getTime() + "."));
             OutputStream os = new FileOutputStream(myfile);
             os.write(data);
-
+            Thread.sleep(5000);
+            myfile.delete();
             os.close();
-            client.close();
 
         } catch (S3Exception e) {
             System.err.println("Status code => " + e.statusCode());
             System.err.println(e.awsErrorDetails().errorMessage());
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
