@@ -1,0 +1,21 @@
+id, nome, descricao, quantidade, data
+1, arroz, saco de 5k, 1, 2022-05-02T10:16:00
+2, feijao, saco de 2k, 1, 2022-05-02T10:17:00
+3, farinha de trigo, saco de 1k, 1, 2022-05-02T10:18:00
+4, acucar, saco de 1k, 1, 2022-05-02T10:19:00
+5, leite, caixa de 1L, 1, 2022-05-02T10:20:00
+6, cafe, saco de 1k, 1, 2022-05-02T10:21:00
+7, macarrao, caixa de 500g, 1, 2022-05-02T10:22:00
+8, molho de tomate, pacote de 300ml, 1, 2022-05-02T10:23:00
+9, farinha de rosca, saco de 1k, 1, 2022-05-02T10:24:00
+10, lentilha, saco de 1k, 1, 2022-05-02T10:25:00
+11, banana, banana nanica, 6, 2022-05-02T10:26:00
+12, uva, uva sem caroco, 5, 2022-05-02T10:27:00
+13, maca, maca fuji, 1, 2022-05-02T10:28:00
+14, laranja, laranja lima, 1, 2022-05-02T10:29:00
+15, limao, limao siciliano, 1, 2022-05-02T10:30:00
+16, maracuja, maracuja doce, 1, 2022-05-02T10:31:00
+17, morango, caixa de 300g, 1, 2022-05-02T10:32:00
+18, brocolis, brocolis ninja, 1, 2022-05-02T10:33:00
+19, couve, couve manteiga, 1, 2022-05-02T10:34:00
+20, cenoura, cenoura organica, 1, 2022-05-02T10:35:00

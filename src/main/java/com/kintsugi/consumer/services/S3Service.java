@@ -1,24 +1,19 @@
 package com.kintsugi.consumer.services;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Paths;
 import java.util.Date;
 
 import com.kintsugi.consumer.utils.ClientS3;
 
 import software.amazon.awssdk.core.ResponseBytes;
-import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectAclResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
@@ -59,8 +54,7 @@ public class S3Service {
             File myfile = new File(objKey.replace(".", "-" + new Date().getTime() + "."));
             OutputStream os = new FileOutputStream(myfile);
             os.write(data);
-            Thread.sleep(5000);
-            myfile.delete();
+
             os.close();
 
         } catch (S3Exception e) {
@@ -68,9 +62,6 @@ public class S3Service {
             System.err.println(e.awsErrorDetails().errorMessage());
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
