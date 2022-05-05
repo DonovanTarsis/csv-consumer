@@ -31,6 +31,6 @@ public class Product {
 
     private int quantidade;
 
-    private LocalDate data;
+    private String data;
 
 }

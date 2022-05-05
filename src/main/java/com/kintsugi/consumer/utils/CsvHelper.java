@@ -33,7 +33,7 @@ public class CsvHelper {
         p.setNome(csvRecord.get("nome"));
         p.setDescricao(csvRecord.get("descricao"));
         p.setQuantidade(Integer.parseInt(csvRecord.get("quantidade")));
-        p.setData(LocalDate.parse(csvRecord.get("data")));
+        // p.setData(LocalDate.parse(csvRecord.get("data")));
 
         productList.add(p);
       }

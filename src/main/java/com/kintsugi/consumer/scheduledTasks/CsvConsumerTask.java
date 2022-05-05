@@ -2,8 +2,10 @@ package com.kintsugi.consumer.scheduledTasks;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
+import com.kintsugi.consumer.models.Product;
 import com.kintsugi.consumer.respositories.ProductRepository;
 import com.kintsugi.consumer.services.S3Service;
 import com.kintsugi.consumer.utils.ConsumerProperties;
@@ -35,7 +37,11 @@ public class CsvConsumerTask {
 
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.println("Nova msg => " + record.value());
-                    S3Service.getObject(record.value());
+                    List<Product> list = S3Service.getObject(record.value());
+
+                    for (Product p : list) {
+                        productRepository.save(p);
+                    }
 
                 }
 
