@@ -49,7 +49,7 @@ public class S3Service {
         }
     }
 
-    public static List<Product> getObject(String objKey) {
+    public static String getObject(String objKey) {
         try {
 
             GetObjectRequest request = GetObjectRequest.builder()
@@ -67,28 +67,7 @@ public class S3Service {
             os.write(data);
 
             os.close();
-
-            Reader in = new FileReader(path);
-            Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-            Product p = new Product();
-            List<Product> list = new ArrayList<>();
-            int count = 0;
-            for (CSVRecord record : records) {
-                if (count > 0) {
-                    p.setNome(record.get(1).trim());
-                    p.setDescricao(record.get(2).trim());
-                    p.setQuantidade(Integer.parseInt(record.get(3).trim()));
-                    p.setData(record.get(4).trim());
-
-                    list.add(p);
-                    count += 1;
-                }
-
-            }
-
-            System.out.println(list.size());
-
-            return list;
+            return path;
         } catch (S3Exception e) {
             System.err.println("Status code => " + e.statusCode());
             System.err.println(e.awsErrorDetails().errorMessage());

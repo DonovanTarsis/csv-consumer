@@ -1,5 +1,6 @@
 package com.kintsugi.consumer.scheduledTasks;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Properties;
 
 import com.kintsugi.consumer.models.Product;
 import com.kintsugi.consumer.respositories.ProductRepository;
+import com.kintsugi.consumer.services.CsvService;
+import com.kintsugi.consumer.services.ProductService;
 import com.kintsugi.consumer.services.S3Service;
 import com.kintsugi.consumer.utils.ConsumerProperties;
 
@@ -21,9 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CsvConsumerTask {
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Scheduled(fixedRate = 1000)
     public void start() {
         Properties properties = ConsumerProperties.getProperties();
@@ -37,12 +37,10 @@ public class CsvConsumerTask {
 
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.println("Nova msg => " + record.value());
-                    List<Product> list = S3Service.getObject(record.value());
-
-                    for (Product p : list) {
-                        productRepository.save(p);
-                    }
-
+                    String path = S3Service.getObject(record.value());
+                    List<Product> list = CsvService.getProducts(path);
+                    ProductService.saveAll(list);
+                    CsvService.delete(new File(path));
                 }
 
             }
