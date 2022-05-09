@@ -1,23 +1,29 @@
 package com.kintsugi.consumer.services;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Paths;
+import java.io.Reader;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import com.kintsugi.consumer.models.Product;
 import com.kintsugi.consumer.utils.ClientS3;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+
 import software.amazon.awssdk.core.ResponseBytes;
-import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectAclResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
@@ -43,7 +49,7 @@ public class S3Service {
         }
     }
 
-    public static void getObject(String objKey) {
+    public static String getObject(String objKey) {
         try {
 
             GetObjectRequest request = GetObjectRequest.builder()
@@ -55,19 +61,20 @@ public class S3Service {
 
             byte[] data = objBytes.asByteArray();
 
-            File myfile = new File(objKey);
+            String path = objKey.replace(".", "-" + new Date().getTime() + ".");
+            File myfile = new File(path);
             OutputStream os = new FileOutputStream(myfile);
             os.write(data);
 
             os.close();
-            client.close();
-
+            return path;
         } catch (S3Exception e) {
             System.err.println("Status code => " + e.statusCode());
             System.err.println(e.awsErrorDetails().errorMessage());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        return null;
     }
 
     // public static void putObject() {
